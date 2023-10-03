@@ -1,0 +1,53 @@
+##Get service document
+http://localhost:4004/odata/v4/CatalogServ
+###Get service metadata
+http://localhost:4004/odata/v4/CatalogServ/$metadata
+###GetEmployee data
+http://localhost:4004/odata/v4/CatalogServ/EmployeeSet
+###GetEmployee data - pagination
+http://localhost:4004/odata/v4/CatalogServ/EmployeeSet?$top=2&$skip=2
+###GetEmployee data - filter
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$filter=sex eq 'F'
+###Get all products
+http://localhost:4004/odata/v4/CatalogService/ProductView
+###Get Record single by key
+http://localhost:4004/odata/v4/CatalogService/ProductView('74867AD200E41EDBA5D8B06B26EBA052')
+###Get Product Data with association
+http://localhost:4004/odata/v4/CatalogService/ProductView('74867AD200E41EDBA5D8B06B26EBA052')?$expand=To_Items
+
+###Read from custom service
+http://localhost:4004/odata/v4/CatalogServ/ReadEmpSrv
+
+###POST to insert data
+POST http://localhost:4004/CatalogServ/InserEmployeeSrv
+Content-Type: application/json
+
+{
+      "ID": "02BD2137-0890-1EEA-A6C2-BB55C198E8DB",
+      "nameFirst": "Happy",
+      "nameMiddle": null,
+      "nameLast": "New Data",
+      "nameInitials": null,
+      "sex": "F",
+      "language": "E",
+      "phoneNumber": null,
+      "email": "nongyui@ey.com",
+      "loginName": "NONBGYUI",
+      "Currency_code": "USD",
+      "salaryAmount": 95000,
+      "accountNumber": "9988776655",
+      "bankId": "12100035",
+      "bankName": "My Bank of San Francisco"
+}
+
+###POST to insert data
+PATCH http://localhost:4004/CatalogServ/UpdateEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C198E8DB
+Content-Type: application/json
+
+{
+    "nameFirst": "Update"
+}
+
+###DELETE Employee
+DELETE http://localhost:4004/CatalogServ/DeleteEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C198E8DB
+Content-Type: application/json
