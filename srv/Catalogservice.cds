@@ -1,15 +1,12 @@
 using { shreyas.db } from '../db/database';
 using { shreyas.cds } from '../db/CDSViews';
-service CatalogService @(path : 'CatalogServ') {
+service CatalogService @(path : 'CatalogServ', requires: 'authenticated-user') {
     entity BusinessPartnerSet as projection on db.master.businesspartner;
     entity AddressSet as projection on db.master.address;
-    entity EmployeeSet as projection on db.master.employees {
-        nameFirst,
-        nameLast,
-        sex,
-        phoneNumber,
-        email
-    };
+     entity EmployeeSet @(restrict: [ 
+                        { grant: ['READ'], to: 'mycapapp_Viewer', where: 'bankName = $user.BankName' },
+                        { grant: ['WRITE'], to: 'mycapapp_Admin' }
+                        ]) as projection on db.master.employees;
    // entity PurchaseOrder as projection on db.transaction.purchaseorder;
    entity PurchaseOrderItems as projection on db.transaction.poitems;
    //entity PurchaseOrderSet as projection on cds.CDSViews.POWorklist;
